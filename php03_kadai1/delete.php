@@ -13,7 +13,7 @@ $status = $stmt->execute();
 if ($status == false) {
     sqlError($stmt);
 } else {
-    header("Location: select.php");
+    header("Location: bm_list_view.php");
     echo "削除しました";
     exit;
 }
