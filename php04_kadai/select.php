@@ -1,5 +1,8 @@
 <?php
+session_start();
 include "funcs.php";
+sessChk();
+
 $pdo = db_con();
 
 //２．データ登録SQL作成
@@ -15,15 +18,23 @@ if ($status == false) {
     //FETCH_ASSOC=http://php.net/manual/ja/pdostatement.fetch.php
     while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $view .= '<p>';
-        $view .= '<a href="delete.php?id=' . $result["id"] . '">';
-        $view .= "[☓]";
-        $view .= '</a>';
 
-        $view .= '<a href="detail.php?id=' . $result["id"] . '">';
-        $view .= $result["name"] . "," . $result["email"] . "<br>";
-        $view .= '</a>';
+        if($_SESSION["kanri_flg"]=="1"){
+            $view .= '<a href="delete.php?id=' . $result["id"] . '">';
+            $view .= "[☓]";
+            $view .= '</a>';
+            $view .= '<a href="detail.php?id=' . $result["id"] . '">';
+            $view .= $result["name"] . "," . $result["email"] . "<br>";
+            $view .= '</a>';
+        }else{
+            // $view .= '<a href="detail.php?id=' . $result["id"] . '">';
+            // $view .= '</a>';
+            $view .= $result["name"] . "," . $result["email"] . "<br>";
+        }
         $view .= '</p>';
 
+        
+        
     }
 
 }
@@ -47,7 +58,17 @@ if ($status == false) {
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="navbar-header">
-      <a class="navbar-brand" href="index.php">データ登録</a>
+      <?php echo $_SESSION["name"]."さん" ?>
+    <?php
+      if($_SESSION["kanri_flg"]=="1"){
+        echo '<a class="navbar-brand" href="index.php">データ登録</a>';
+        echo '<a class="navbar-brand" href="user_list_view.php">登録ユーザーの一覧</a>';
+        echo '<a class="navbar-brand" href="logout.php">ログアウト</a>';
+      }else{
+        echo '<a class="navbar-brand" href="index.php">データ登録</a>';
+        echo '<a class="navbar-brand" href="logout.php">ログアウト</a>';
+      }
+      ?>
       </div>
     </div>
   </nav>

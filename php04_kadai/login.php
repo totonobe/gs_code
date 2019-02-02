@@ -20,7 +20,7 @@ ID:<input type="text" name="lid" />
 PW:<input type="password" name="lpw" />
 <input type="submit" value="LOGIN" />
 </form>
-
+<a href="logout.php">ログアウト</a>
 
 </body>
 </html>

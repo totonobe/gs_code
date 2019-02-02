@@ -22,3 +22,12 @@ function sqlError($stmt){
     $error = $stmt->errorInfo();
     exit("ErrorSQL:".$error[2]);
   }
+
+function sessChk(){
+    if(!isset($_SESSION["chk_ssid"])||$_SESSION["chk_ssid"]!=session_id()){
+        exit("Error");
+    }else{
+        session_regenerate_id(true);//trueを入れないとセッションキーがどんどん生成される
+        $_SESSION["chk_ssid"]=session_id();
+    }
+}
